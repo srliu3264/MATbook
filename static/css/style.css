@@ -1,0 +1,54 @@
+:root {
+    --admonish-bg: #f0f0f0; /* subtle light gray background */
+  }
+  
+  .olivine-admonish {
+    margin: 1em 0;
+    padding: 0 1em;
+    background-color: var(--admonish-bg);
+    border: 1px solid var(--admonish-bg);
+    border-radius: 1em;
+  }
+  
+
+.theorem-block {
+    border-left: 4px solid #0c6; /* Green border */
+    padding-left: 10px;
+    margin: 20px 0;
+    background-color: #f9f9f9;
+}
+
+.lemma-block {
+    border-left: 4px solid #0c6;
+    padding-left: 10px;
+    margin: 20px 0;
+    background-color: #f9f9f9;
+}
+
+.remark-block {
+    border-left: 4px solid #999; /* Gray border */
+    padding-left: 10px;
+    margin: 20px 0;
+    background-color: #f5f5f5;
+}
+
+.example-block {
+    border-left: 4px solid #f90; /* Orange border */
+    padding-left: 10px;
+    margin: 20px 0;
+    background-color: #fffbf3;
+}
+
+.warning-block {
+    border-left: 4px solid #f00; /* Red border */
+    padding-left: 10px;
+    margin: 20px 0;
+    background-color: #ffe6e6;
+}
+
+.proof-block {
+    border-left: 4px solid #00f; /* Blue border */
+    padding-left: 10px;
+    margin: 20px 0;
+    background-color: #e6f7ff;
+}

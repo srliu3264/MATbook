@@ -1,0 +1,48 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="page-layout">
+    <main class="main-content">
+        <h1>{{ page.title }}</h1>
+        {{ page.content | safe }}
+    </main>
+
+    {% if page.toc %}
+    <aside class="toc-sidebar" id="toc-sidebar">
+      <nav class="toc-content">
+        <h3>Table of Contents</h3>
+        <ul>
+          {% for h1 in page.toc %}
+          {% set h1_index = loop.index %}
+          <li>
+            <a href="{{ h1.permalink | safe }}">{{ h1_index }}. {{ h1.title }}</a>
+            {% if h1.children %}
+            <ul>
+              {% for h2 in h1.children %}
+              {% set h2_index = loop.index %}
+              <li>
+                <a href="{{ h2.permalink | safe }}">{{ h1_index }}.{{ h2_index }}. {{ h2.title }}</a>
+                {% if h2.children %}
+                <ul>
+                  {% for h3 in h2.children %}
+                  {% set h3_index = loop.index %}
+                  <li>
+                    <a href="{{ h3.permalink | safe }}">{{ h1_index }}.{{ h2_index }}.{{ h3_index }}. {{ h3.title }}</a>
+                  </li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
+              </li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </aside>
+    <button id="toggle-toc" class="toc-toggle">☰</button>
+    {% endif %}
+    
+</div>
+{% endblock content %}
