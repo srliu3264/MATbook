@@ -18,4 +18,5 @@ book_number_chapters = false
 book_only_current_section_pages = true
 tikzjax = true
 upload_prefix = "/upload"
+home_url = "https://shurui.sites.stanford.edu/"
 

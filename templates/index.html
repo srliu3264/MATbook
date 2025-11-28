@@ -121,12 +121,11 @@
                     <span></span>
                 </div>
                 {% if config.build_search_index %}
-<a href="https://shurui.sites.stanford.edu/" class="home-link">Home</a>
-<span class="separator">/</span>
-<span class="title-name">{{ config.title }}</span>
-  
-<span class="separator">/</span>
-<span class="search-icon">🔎</span>
+			<a href="{{ config.extra.booktheme.home_url | default(value=config.base_url) }}" class="home-link">Home</a>
+			<span class="separator">/</span>
+			<span class="title-name">{{ config.title }}</span>
+  			<span class="separator">/</span>
+			<span class="search-icon">🔎</span>
                 {% endif %}
             </div>
 
