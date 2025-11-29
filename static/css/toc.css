@@ -426,3 +426,83 @@ a {
     background-color: #333 !important;
     color: #e0e0e0 !important;
 }
+
+
+/* ========================================= */
+/* NOTE: III: other windows
+*/
+/* ========================================= */
+
+/* =========================================
+   1. HELP WINDOW (TOGGLED BY KEYBINDING '/') 
+========================================= */
+.help-modal {
+    position: fixed;
+    top: 0; left: 0; 
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5); /* Dimmed background overlay */
+    z-index: 2000; /* Ensure it sits on top of everything */
+    
+    /* Center the box */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.help-content {
+    background: var(--bg-color, white); 
+    color: var(--text-color, black);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    border: 1px solid var(--bar-border, #ddd);
+    min-width: 300px;
+}
+
+.help-content h3 {
+    margin-top: 0;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.help-content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.help-content li {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.key {
+    display: inline-block;
+    background: #eee;
+    color: #333;
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-family: monospace;
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
+    margin-right: 5px;
+}
+
+/* Dark Mode Tweaks for Keys */
+[data-theme="dark"] .key {
+    background: #333;
+    color: #eee;
+    border-color: #555;
+}
+/* =========================================
+   2. HEADER TOGGLE STATE
+   ========================================= */
+
+/* When header is hidden, move the right sidebar up to fill the gap. */
+body.header-hidden .toc-sidebar {
+    top: 0 !important;
+    height: 100vh;
+}

@@ -52,3 +52,16 @@
     margin: 20px 0;
     background-color: #e6f7ff;
 }
+
+/* Styling for the 'f' key link hints */
+.goelems {
+  background-color: #ffd700; /* Yellow background */
+  color: #000;               /* Black text */
+  font-family: monospace;
+  font-weight: bold;
+  padding: 2px 4px;
+  border: 1px solid #000;
+  border-radius: 3px;
+  font-size: 12px;
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
