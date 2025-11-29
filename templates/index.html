@@ -52,6 +52,20 @@
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" id="MathJax-script" async></script>
     <link rel="stylesheet" href="{{ get_url(path='css/toc.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- choose light/dark before page renders, avoid blinking in dark mode -->
+    <script>
+        (function() {
+            // Check Local Storage
+            var savedTheme = localStorage.getItem("theme");
+            // Check System Preference
+            var systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+            
+            // Apply Dark Mode immediately if needed (before page renders)
+            if (savedTheme === "dark" || (!savedTheme && systemDark)) {
+                document.documentElement.setAttribute("data-theme", "dark");
+            }
+        })();
+    </script>
 </head>
 
     <body>
