@@ -3,8 +3,8 @@
     <head>
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta http-equiv="content-type" content="text/html; charset=utf-8">
-
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     {% if page %}
       {% if page.description %}
       <meta name="description" content="{{ page.description }}" />
@@ -27,7 +27,8 @@
 
       {% block extra_head %}
       {% endblock extra_head %}
-      <script>
+   
+    <script>
     MathJax = {
       packages: {'[+]': ['ams','cancel','amscd']},
       tex: {
@@ -43,30 +44,35 @@
     </script>
     <link rel="stylesheet" href="{{ get_url(path="dist/tikzjax/fonts.css") }}">
     <script src="{{ get_url(path="dist/tikzjax/tikzjax.js") }}" defer></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" id="MathJax-script" async></script>
+    
     <link rel="stylesheet" href="{{ get_url(path='css/toc.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
     <script>
         (function() {
-            // Check Local Storage
+            // 1. Dark/Light Theme Check
             var savedTheme = localStorage.getItem("theme");
-            // Check System Preference
             var systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-            
-            // Apply Dark Mode immediately if needed (before page renders)
             if (savedTheme === "dark" || (!savedTheme && systemDark)) {
                 document.documentElement.setAttribute("data-theme", "dark");
-            } // <--- FIXED: Added the missing closing brace here
+            }
+
+            // 2. Collapse Check (Anti-Flash)
+            var savedCollapse = localStorage.getItem("collapse-sidebar");
+            if (savedCollapse === 'true') {
+                document.documentElement.classList.add('collapse-mode');
+            }
         })();
     </script>
 </head>
 
     <body>
     {% include "leftbar/directory.html" %}
+    
     <div class="page">
         {% include "topbar/header.html" %} 
+            
             <div class="page__content">
                 {% if config.build_search_index %}
                 <div class="search-container">
@@ -77,32 +83,32 @@
                     </div>
                 </div>
                 {% endif %}
+                
                 <div class="book-content">
-             {% block content %}
-                <div class="page-layout">
-                    <main class="main-content">
-                        {% if section.title %}
-                                <h1>{{ section.title }}</h1>
-                        {% endif %}
+                    {% block content %}
+                        <div class="page-layout">
+                            <main class="main-content">
+                                {% if section.title %}
+                                        <h1>{{ section.title }}</h1>
+                                {% endif %}
 
-                        {% if section.content %}
-                                {{ section.content | safe }}
-                        {% endif %}
-                    </main>
-             
-                    </div>
-             {% endblock content %}
-                </div> </div> <div class="prev-link">
-                {% block prev_link %}
-                {% endblock prev_link %}
-            </div>
+                                {% if section.content %}
+                                        {{ section.content | safe }}
+                                {% endif %}
+                            </main>
+                        </div>
+                    {% endblock content %}
+                </div> <div class="prev-link">
+                    {% block prev_link %}
+                    {% endblock prev_link %}
+                </div>
 
-            <div class="next-link">
-                {% block next_link %}
-                {% endblock next_link %}
-            </div>
-            
-    </div> {% block js_body %}
+                <div class="next-link">
+                    {% block next_link %}
+                    {% endblock next_link %}
+                </div>
+                
+            </div> </div> {% block js_body %}
         {% if config.build_search_index %}
         <script type="text/javascript" src="{{ get_url(path="elasticlunr.min.js") | safe }}"></script>
         <script type="text/javascript" src="{{ get_url(path="search_index.en.js") | safe }}"></script>
@@ -119,5 +125,6 @@
     <script src="{{ get_url(path='js/hotkeys.js') }}"></script>
     
     {% include "windows/help.html" %}
+    
     </body>
 </html>

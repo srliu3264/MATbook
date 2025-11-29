@@ -350,7 +350,7 @@ body {
     font-weight: bold;         
 }
 /* /* ========================================= */
-/*    4. LEFT BAR (old version: there horizontal lines)*/
+/*    4.1,4.2 old version: 3 horizontal lines)*/
 /*    ========================================= */ */
 /**/
 /* /* change the BACKGROUND of the lines */ */
@@ -516,4 +516,17 @@ a {
 body.header-hidden .toc-sidebar {
     top: 0 !important;
     height: 100vh;
+}
+/* =========================================
+   3. COLLAPSE MODE (Toggle 'c')
+   ========================================= */
+/* 1. Hide sub-menus of inactive chapters... */
+body.collapse-mode .menu li > ul {
+    display: none;
+}
+
+/* 2. ...BUT show them if the chapter is Active OR contains the Active page */
+body.collapse-mode .menu li.active > ul,
+body.collapse-mode .menu li.active-parent > ul {
+    display: block;
 }
