@@ -530,3 +530,26 @@ body.collapse-mode .menu li.active > ul,
 body.collapse-mode .menu li.active-parent > ul {
     display: block;
 }
+/* =========================================
+   4. TOC COLLAPSE MODE (Toggle 'v')
+   ========================================= */
+
+/* 1. Hide sub-levels (ul inside li) by default when 'v' is active */
+html.toc-collapse-mode .toc-sidebar li > ul {
+    display: none;
+}
+
+/* 2. Show sub-levels ONLY if the parent is active (Current Section) */
+/* The 'active' class is added by toc.js (ScrollSpy) */
+html.toc-collapse-mode .toc-sidebar li.active > ul {
+    display: block;
+}
+
+/* 3. Style Active Links in TOC (Visual Feedback) */
+.toc-sidebar li.active > a {
+    color: #007bff; 
+    font-weight: bold;
+}
+[data-theme="dark"] .toc-sidebar li.active > a {
+    color: #66b3ff;
+}

@@ -9,6 +9,8 @@ window.hintInput = "";
     if (savedCollapse === 'true') {
         document.body.classList.add('collapse-mode');
     }
+    let savedTOC = localStorage.getItem("toc-collapse");
+    if (savedTOC === 'true') document.documentElement.classList.add('toc-collapse-mode');
 })();
 // 2. EXPAND ACTIVE MENU PATH
 // This ensures that if you are in a subsection, the parent chapter stays open in 'c' mode
@@ -97,6 +99,8 @@ document.addEventListener("keydown", function(e) {
     case 'K': scrollTOC(-100); break;
     case 'g': scrollToPosition(0); break;
     case 'G': scrollToPosition(999999); break;
+    case 'v': toggleTOCCollapse(); break;
+    case 's': window.dispatchEvent(new Event('toggle-scroll-spy')); break;
   }
 });
 
@@ -350,5 +354,15 @@ function scrollTOC(amount) {
     let toc = document.querySelector('.toc-sidebar');
     if (toc) {
         toc.scrollBy({ top: amount, behavior: 'smooth' });
+    }
+}
+function toggleTOCCollapse() {
+    let html = document.documentElement;
+    if (html.classList.contains('toc-collapse-mode')) {
+        html.classList.remove('toc-collapse-mode');
+        localStorage.setItem("toc-collapse", "false");
+    } else {
+        html.classList.add('toc-collapse-mode');
+        localStorage.setItem("toc-collapse", "true");
     }
 }
