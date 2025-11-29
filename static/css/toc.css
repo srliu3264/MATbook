@@ -1,47 +1,148 @@
-/* Container layout */
-.page-layout {
+ /* =========================================
+   0. HEADER LAYOUT (NEW SECTION)
+   ========================================= */
+/* This fixes the "Second Line" issue by forcing a single row */
+.page__header {
+    /* NEW: Grey Background & Divider Line */
+    background-color: #f0f0f0;  /* Light Grey */
+    border-bottom: 1px solid #ddd; /* Darker grey line for separation */
+    
+    /* Layout Logic */
+    display: flex !important;       
+    justify-content: space-between; 
+    align-items: center;            
+    width: 100%;
+    
+    /* Spacing */
+    height: 50px; /* Force a consistent height */
+    padding: 0 10px; /* Add a little space on the left/right edges */
+    box-sizing: border-box; 
+}
+
+/* Ensure the Left side contents (Home / Title) stay in a row */
+.header-left {
     display: flex;
+    align-items: center;
+    flex-wrap: wrap; 
+}
+
+/* Ensure the Right side (Icon) stays aligned */
+.header-right {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Extra safety to push it right */
+}
+
+
+/* =========================================
+   1. MAIN LAYOUT & SPACING
+   ========================================= */
+
+/* The container for content + sidebar */
+.page-layout {
     position: relative;
-  }
-  
-  /* Main content area */
-  .main-content {
-    flex: 1;
-    padding: 1rem;
-  }
-  
-  /* TOC Sidebar */
-  .toc-sidebar {
+    width: 100%;
+}
+
+/* The actual text content area */
+.main-content {
+    width: 100%;
+    padding: 1rem 2rem; 
+    box-sizing: border-box;
+    transition: margin-right 0.3s ease; 
+}
+
+
+/* =========================================
+   2. THE RIGHT SIDEBAR (TOC)
+   ========================================= */
+
+.toc-sidebar {
     position: fixed;
-    top: 0;
+    top: 50px; /* Match this to your header height */
     right: 0;
-    width: 300px;
-    height: 100vh;
+    bottom: 0; 
+    
+    width: 250px;
     background-color: #f9f9f9;
     border-left: 1px solid #ddd;
-    padding: 1rem;
-    overflow-y: auto;
+    overflow-y: auto; 
+    z-index: 95;      
+
+    /* DEFAULT STATE (For Mobile AND Desktop): Hidden off-screen */
     transform: translateX(100%);
     transition: transform 0.3s ease;
-    z-index: 1000;
-  }
-  
-  /* Sidebar visible state */
-  .toc-sidebar.visible {
-    transform: translateX(0);
-  }
-  
-  /* Toggle button */
-  .toc-toggle {
-    position: fixed;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
+}
+
+/* Formatting the list inside the TOC */
+.toc-content {
+    padding: 1rem;
+    font-size: 0.9em;
+}
+.toc-content ul {
+    list-style: none;
+    padding-left: 0;
+}
+.toc-content ul li {
+    margin-bottom: 0.5em;
+}
+.toc-content ul ul {
+    padding-left: 1.5em; 
+}
+
+
+/* =========================================
+   3. THE TOGGLE ICON (Global)
+   ========================================= */
+
+.toc-icon {
     cursor: pointer;
-    z-index: 1001;
-  }
-  
+    
+    /* CHANGED: Size reduced to match standard text */
+    font-size: 2.3rem;     
+    color: #333;         
+    
+    /* Center the text icon */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Clickable Area */
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+.toc-icon:hover {
+    color: #007bff; 
+}
+
+/* Hide the old button class if it still exists */
+.toc-toggle {
+    display: none;
+}
+
+
+/* =========================================
+   4. DESKTOP BEHAVIOR (Large Screens)
+   ========================================= */
+
+@media screen and (min-width: 1100px) {
+    
+    /* When the sidebar is visible, push the content to the left */
+    .toc-sidebar.visible ~ .page-layout .main-content {
+        margin-right: 250px; 
+        max-width: calc(100% - 250px);
+    }
+}
+
+
+/* =========================================
+   5. SHARED BEHAVIOR (Mobile & Desktop)
+   ========================================= */
+
+/* The class added by JavaScript when you click the icon */
+.toc-sidebar.visible {
+    transform: translateX(0); /* Slide it in */
+    box-shadow: -2px 0 10px rgba(0,0,0,0.1); 
+}

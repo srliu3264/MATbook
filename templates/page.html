@@ -2,6 +2,7 @@
 
 {% block content %}
 <div class="page-layout">
+    
     <main class="main-content">
         <h1>{{ page.title }}</h1>
         {{ page.content | safe }}
@@ -22,17 +23,7 @@
               {% set h2_index = loop.index %}
               <li>
                 <a href="{{ h2.permalink | safe }}">{{ h1_index }}.{{ h2_index }}. {{ h2.title }}</a>
-                {% if h2.children %}
-                <ul>
-                  {% for h3 in h2.children %}
-                  {% set h3_index = loop.index %}
-                  <li>
-                    <a href="{{ h3.permalink | safe }}">{{ h1_index }}.{{ h2_index }}.{{ h3_index }}. {{ h3.title }}</a>
-                  </li>
-                  {% endfor %}
-                </ul>
-                {% endif %}
-              </li>
+                </li>
               {% endfor %}
             </ul>
             {% endif %}
@@ -41,7 +32,6 @@
         </ul>
       </nav>
     </aside>
-    <button id="toggle-toc" class="toc-toggle">☰</button>
     {% endif %}
     
 </div>
