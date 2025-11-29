@@ -1,21 +1,26 @@
 <div class="page__header">
     <div class="header-left">
         <div class="menu-icon">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        {% if config.build_search_index %}
+    		<img src="{{ get_url(path="icons/knot.png") }}" alt="Menu" />
+	</div>
+	{% if config.build_search_index %}
             <a href="{{ config.extra.booktheme.home_url | default(value=config.base_url) }}" class="home-link">Home</a>
             <span class="separator">/</span>
-            <span class="title-name">{{ config.title }}</span>
+            <a href="{{ config.base_url }}" class="title-name">
+        	{{ config.title }}
+    	    </a>
             <span class="separator">/</span>
-            <span class="search-icon">🔎</span>
+	    <div class="search-icon">
+   			 <i class="fa-solid fa-magnifying-glass"></i>
+	    </div>
         {% endif %}
     </div>
     <div class="header-right">
+	<div id="theme-toggle" class="theme-icon" title="Toggle Dark Mode">
+        	<i class="fa-solid fa-moon"></i>
+        </div>
 	{% if page.toc %}
-    	<div id="toggle-toc" class="toc-icon"><i class="fa-solid fa-list-ul"></i></div>
+    		<div id="toggle-toc" class="toc-icon"><i class="fa-solid fa-list-ul"></i></div>
     	{% endif %}
     </div>
 </div>

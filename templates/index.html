@@ -69,9 +69,21 @@
                 </div>
                 {% endif %}
                 <div class="book-content">
-                    {% block content %}
-                    {% endblock content %}
-                </div>
+    		 {% block content %}
+        		<div class="page-layout">
+            		<main class="main-content">
+                		{% if section.title %}
+                    			<h1>{{ section.title }}</h1>
+                		{% endif %}
+
+                		{% if section.content %}
+                    			{{ section.content | safe }}
+                		{% endif %}
+            		</main>
+            
+            		</div>
+    		 {% endblock content %}
+		</div>
             </div>
 	</div>
 
@@ -94,6 +106,7 @@
             <script type="text/javascript" src="{{ get_url(path="book.js") | safe }}"></script>
         {% endblock js_body %}
         <script src="{{ get_url(path='js/toc.js') }}"></script>
+	<script src="{{ get_url(path="js/theme.js") }}"></script>
     </body>
 
 </html>
