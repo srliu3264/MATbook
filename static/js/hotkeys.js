@@ -92,6 +92,8 @@ document.addEventListener("keydown", function(e) {
     // --- SCROLLING ---
     case 'j': scrollPage(100); break;
     case 'k': scrollPage(-100); break;
+    case 'J': scrollTOC(100); break;
+    case 'K': scrollTOC(-100); break;
     case 'g': scrollToPosition(0); break;
     case 'G': scrollToPosition(999999); break;
   }
@@ -297,4 +299,10 @@ function followGoElems(key) {
 function clearGoElems() {
   window.goElems.forEach(item => item.label.remove());
   window.goElems = [];
+}
+function scrollTOC(amount) {
+    let toc = document.querySelector('.toc-sidebar');
+    if (toc) {
+        toc.scrollBy({ top: amount, behavior: 'smooth' });
+    }
 }
