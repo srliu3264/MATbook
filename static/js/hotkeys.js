@@ -1,7 +1,7 @@
 console.log("Hotkeys script loaded");
 
 window.goElems = [];
-
+window.hintInput = "";
 // 1. INITIALIZE SETTINGS ON LOAD
 // Restore 'c' toggle preference immediately
 (function initSettings() {
@@ -47,7 +47,8 @@ document.addEventListener("keydown", function(e) {
     if (e.key === "Escape" || e.key === "f") {
         clearGoElems();
     } else {
-        followGoElems(e.key);
+        window.hintInput += e.key.toLowerCase();
+        followGoElems();
     }
     return; 
   }
@@ -248,26 +249,54 @@ function navigateNextChapter() {
 /* ============================
    LINK HINT LOGIC
    ============================ */
+/* ============================
+   MULTI-CHAR LINK HINT LOGIC (Fixed)
+   ============================ */
 
 function addGoElems() {
   const goElems = window.goElems;
   if (goElems.length > 0) return;
+  window.hintInput = "";
 
-  const keyStr = "qwertyuiopasdghjklzxcvbnm";
+  // 1. Identify valid links
   let links = document.querySelectorAll("a, button");
-  let count = 0;
-
+  let validLinks = [];
   links.forEach((elem) => {
-    if (count >= keyStr.length) return;
     const rect = elem.getBoundingClientRect();
     if (rect.width === 0 || rect.height === 0 || rect.top < 0 || rect.top > window.innerHeight) return;
+    validLinks.push({ elem: elem, rect: rect });
+  });
 
+  // 2. Determine required label length (Depth)
+  // This prevents "a" vs "aa" conflicts by making ALL labels the same length
+  // e.g. If you have 30 links, everyone gets 2 letters (aa, ab... ba...)
+  const chars = "abcdeghijklmnopqrstuvwxyz"; // 'f' excluded? Add it back if you want.
+  const total = validLinks.length;
+  let depth = 1;
+  
+  // Increase depth until we can fit all links (25^1 = 25, 25^2 = 625)
+  while (Math.pow(chars.length, depth) < total) {
+      depth++;
+  }
+
+  validLinks.forEach((item, index) => {
+    let labelText = "";
+    let n = index;
+    
+    // Generate fixed-length label (Base-25 conversion)
+    for (let i = 0; i < depth; i++) {
+        let remainder = n % chars.length;
+        labelText = chars[remainder] + labelText;
+        n = Math.floor(n / chars.length);
+    }
+
+    // Create visual label
     const label = document.createElement("div");
-    label.innerText = keyStr[count];
+    label.innerText = labelText;
     label.className = "goelems"; 
     label.style.position = "fixed";
-    label.style.top = rect.top + "px";
-    label.style.left = rect.left + "px";
+    label.style.top = item.rect.top + "px";
+    label.style.left = item.rect.left + "px";
     label.style.zIndex = "10000";
     label.style.background = "gold";
     label.style.color = "black";
@@ -277,28 +306,45 @@ function addGoElems() {
     label.style.borderRadius = "3px";
     label.style.fontSize = "12px";
     label.style.lineHeight = "1";
+    label.style.textTransform = "lowercase";
 
     document.body.appendChild(label);
-    goElems.push({ elem: elem, label: label, key: keyStr[count] });
-    count++;
+    goElems.push({ elem: item.elem, label: label, key: labelText });
   });
 }
-
-function followGoElems(key) {
-  const goElems = window.goElems;
-  const match = goElems.find(item => item.key === key.toLowerCase());
-  if (match) {
-    match.elem.click();
-    if (match.elem.tagName === 'A') window.location.href = match.elem.href;
-    clearGoElems();
-  } else {
-    clearGoElems();
+function followGoElems() {
+  const input = window.hintInput;
+  
+  // Find matches starting with what you typed
+  let matches = window.goElems.filter(item => item.key.startsWith(input));
+  
+  // 1. No matches? Reset.
+  if (matches.length === 0) {
+      clearGoElems();
+      return;
   }
+
+  // 2. Exact Match? Execute.
+  if (matches.length === 1 && matches[0].key === input) {
+      matches[0].elem.click();
+      // if (matches[0].elem.tagName === 'A') window.location.href = matches[0].elem.href;
+      clearGoElems();
+      return;
+  }
+
+  // 3. Partial Matches? Filter visual labels
+  // Hide labels that don't match what you typed so far
+  window.goElems.forEach(item => {
+      if (!item.key.startsWith(input)) {
+          item.label.style.display = 'none';
+      }
+  });
 }
 
 function clearGoElems() {
   window.goElems.forEach(item => item.label.remove());
   window.goElems = [];
+  window.hintInput = ""; // Reset buffer
 }
 function scrollTOC(amount) {
     let toc = document.querySelector('.toc-sidebar');
