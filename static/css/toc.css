@@ -9,6 +9,11 @@
    0. TOPBAR/HEADER LAYOUT
    ========================================= */
 .page__header {
+	/* Comment the following 3 lines if you do not want sticky */
+    position: sticky; 
+    top: 0;
+    z-index: 90; /* Sit above content,below the Sidebars (95/100) */
+
     /* Light grey Background & Dark Grey Divider Line */
     background-color: #f0f0f0;
     border-bottom: 1px solid #ddd;
@@ -23,6 +28,12 @@
     height: 50px; /* Force a consistent height */
     padding: 0 25px; /* Add a little space on the left/right edges */
     box-sizing: border-box;
+}
+	/* Comment the following 4 lines if you do not want sticky */
+[data-theme="dark"] .page__header {
+    /* Ensures the header stays opaque dark grey when scrolling */
+    background-color: var(--bar-bg) !important;
+    border-bottom: 1px solid var(--bar-border);
 }
 
 /* Ensure the Left side (Home / Title) stay in a row */
