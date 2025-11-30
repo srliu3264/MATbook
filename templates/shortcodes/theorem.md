@@ -1,4 +1,4 @@
-<div class="olivine-admonish">
+<div class="MATbook-admonish">
 {% set class_title = class | title %}
 {% if description %}
 {% set header = "**" ~ class_title ~ " " ~ nth ~ "** (" ~ description ~ ")**.** " %}

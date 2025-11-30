@@ -2,7 +2,7 @@
     --admonish-bg: #f0f0f0; /* subtle light gray background */
   }
   
-  .olivine-admonish {
+  .MATbook-admonish {
     margin: 1em 0;
     padding: 0 1em;
     background-color: var(--admonish-bg);

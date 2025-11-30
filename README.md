@@ -46,7 +46,7 @@ build_search_index = true
 ### Numbered chapters
 
 By default, the `MATbook` theme will number the chapters and pages in the left menu.
-You can disable that by setting the `book_number_chapters` in `extra`:
+You can disable that by setting the `book_number_chapters` in `extra.booktheme`:
 
 ```toml
 book_number_chapters = false
@@ -55,7 +55,7 @@ book_number_chapters = false
 ### Current section pages only
 
 By default, the `MATbook` theme will list all the pages in the current section.
-You can disable that by setting the `book_only_current_section_pages` in `extra`:
+You can disable that by setting the `book_only_current_section_pages` in `extra.booktheme`:
 
 ```toml
 book_only_current_section_pages = false
@@ -65,7 +65,7 @@ NOTE: you need to disabe this if you want to use hotkey `v` to toggle it.
 
 ### Math
 
-Enable mathjax and tikzjax if you need mathematics and tikzcd diagrams in your book.
+Enable mathjax and tikzjax in `extra` if you need mathematics and tikzcd diagrams in your book.
 
 ```toml
 tikzjax = true
@@ -74,9 +74,9 @@ mathjax = true
 
 ### Paths
 
-In `extra`, you need to set up two paths:
+You need to set up two paths:
 
-First, `upload_prefix` is the path to the folder, where you put all images.
+First, in `[extra]`, you need to make sure that `upload_prefix` is the path to the directory where you put all images.
 
 For example, if you put all your images in folder `/static/upload`, then you should set
 
@@ -84,7 +84,7 @@ For example, if you put all your images in folder `/static/upload`, then you sho
 upload_prefix = "/upload"
 ```
 
-Second, Home link:
+Second, Home link in `[extra.booktheme]`:
 
 ```toml
 home_url="https://shurui.people.stanford.edu/"
@@ -112,12 +112,14 @@ highlight_theme = "css"
 external_links_target_blank = true
 smart_punctuation = true
 
+[extra]
+upload_prefix = "https://web.stanford.edu/~srliu/Notes/upload"
+tikzjax = true
+mathjax = true
+
 [extra.booktheme]
 book_number_chapters = true
 book_only_current_section_pages = false
-tikzjax = true
-mathjax = true
-upload_prefix = "https://web.stanford.edu/~srliu/Notes/upload"
 home_url = "https://shurui.sites.stanford.edu/"
 ```
 
