@@ -1,4 +1,5 @@
-/* --- THEME VARIABLES FOR BLOCKS --- */
+/* NOTE: configure theorem enviroment, tikzcd format. */
+/**/
 :root {
     /* Default (Light Mode) */
     --admonish-bg: #f0f0f0;
@@ -89,4 +90,21 @@
   border-radius: 3px;
   font-size: 12px;
   box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+/* =========================================
+   DIAGRAMS IN DARK MODE
+   ========================================= */
+/* Target ANY svg inside the main content area */
+[data-theme="dark"] .main-content svg {
+    filter: invert(1) hue-rotate(180deg);
+}
+/* Only inverts images with specific classes to avoid ruining photos */
+[data-theme="dark"] img.invert-dark, 
+[data-theme="dark"] img[src$=".svg"] {
+    filter: invert(1) hue-rotate(180deg);
+}
+/* Ensures standard MathJax equations turn white */
+[data-theme="dark"] .MathJax {
+    color: inherit !important;
+    fill: currentColor !important;
 }
