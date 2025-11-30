@@ -103,6 +103,7 @@ document.addEventListener("keydown", function(e) {
     case 'v': toggleTOCCollapse(); break;
     case 's': window.dispatchEvent(new Event('toggle-scroll-spy')); break;
     case 'o': jumpBack(); break;
+    case 'i': toggleMatrix(); break;
   }
 });
 
@@ -156,6 +157,8 @@ function closeAllModals() {
       let searchIcon = document.querySelector(".search-icon");
       if (searchIcon) searchIcon.click();
   }
+  let matrix = document.getElementById("cmatrix-canvas");
+  if (matrix) toggleMatrix();
 }
 
 function focusSearch() {
