@@ -1,14 +1,14 @@
-name = "book"
-description = "A book theme inspired from GitBook/mdBook"
+name = "MATbook"
+description = "A zola book theme inspired from book and olivine"
 license = "MIT"
-homepage = "https://github.com/getzola/book"
-min_version = "0.17.0"
-demo = "https://getzola.github.io/book/"
+# homepage = "https://github.com/getzola/"
+# min_version = ""
+# demo = ""
 
 [extra]
 book_number_chapters = true
 book_only_current_section_pages = false
 
 [author]
-name = "Vincent Prouillet"
-homepage = "https://www.vincentprouillet.com"
+name = "Shurui Liu"
+homepage = "https://shurui.people.stanford.edu/"

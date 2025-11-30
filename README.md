@@ -1,56 +1,51 @@
-# book
+# MATbook
 
-A theme based on [Gitbook](https://www.gitbook.com), to write documentation
-or books.
-
-![book screenshot](https://github.com/Keats/book/blob/master/screenshot.png?raw=true)
-
+A [Zola](https://github.com/getzola/zola) theme for personal notebooks or chapter books. Based on  [Vincent Prouillet](https://www.vincentprouillet.com/)'s [Book](https://github.com/getzola/book), inspired by [Dongryul Kim](https://web.stanford.edu/~dkim04/)'s [Olivine](https://github.com/dongryul-kim/olivine).
 
 ## Contents
 
-- [book](#book)
+- [MATbook](#matbook)
+  - [Features](#features)
   - [Contents](#contents)
   - [Installation](#installation)
-  - [Usage](#usage)
-  - [Options](#options)
+  - [Configurations](#configurations)
+    - [Enable the theme](#enable-the-theme)
     - [Numbered chapters](#numbered-chapters)
     - [Current section pages only](#current-section-pages-only)
+    - [Math](#math)
+    - [Paths](#paths)
+    - [Example toml](#example-toml)
+
+  - [Usage](#usage)
+    - [File structure](#file-structure)
+    - [Hotkeys](#hotkeys)
+
+## Features
+
+- Idle inside Matrix (MATbook is short for Matrix Book)
+- Searching
+- Light/dark mode
+- Book structure (table of chapters and sections in left sidebar, table of contents of current section in right sidebar)
+- Keyboard shortcuts
+- Backlinks
+- Mathjax, Tikzjax, and basic theorem enviroments included for mathematics and commutative diagrams.
 
 ## Installation
-First download this theme to your `themes` directory:
 
-```bash
-$ cd themes
-$ git clone https://github.com/getzola/book.git
-```
-and then enable it in your `config.toml`:
+Please follow the Zola documentation on [installing and using themes](https://www.getzola.org/documentation/themes/installing-and-using-themes/) to install.
+
+## Configurations
+
+### Enable the theme
 
 ```toml
-theme = "book"
-# Optional, if you want search
+theme = "MATbook"
 build_search_index = true
 ```
 
-## Usage
-Book will generate a book from the files you place in the `content` directory.  Your book
-can have two levels of hierarchy: chapters and subchapters.
-
-Each chapter should be a `section` within the Gutenberg site and should have an `_index.md`
-file that sets its `weight` front-matter variable to its chapter number.  For example,
-chapter 2 should have `weight = 2`.  Additionally, each chapter should also set the
-`sort_by = "weight"` in its front matter.
-
-Each subchapter should be a `page` and should have its `weight` variable set to the subchapter
-number.  For example, subchapter 3.4 should have `weight = 4`.
-
-Finally, you should create an `_index.md` file and set the `redirect_to` front-matter variable
-to redirect to the first section of your content.  For example, if your first section has the
-slug `introduction`, then you would set `redirect_to = "introduction"`.
-
-## Options
-
 ### Numbered chapters
-By default, the `book` theme will number the chapters and pages in the left menu.
+
+By default, the `MATbook` theme will number the chapters and pages in the left menu.
 You can disable that by setting the `book_number_chapters` in `extra`:
 
 ```toml
@@ -58,9 +53,114 @@ book_number_chapters = false
 ```
 
 ### Current section pages only
-By default, the `book` theme will list all the pages in the current section.
+
+By default, the `MATbook` theme will list all the pages in the current section.
 You can disable that by setting the `book_only_current_section_pages` in `extra`:
 
 ```toml
 book_only_current_section_pages = false
 ```
+
+NOTE: you need to disabe this if you want to use hotkey `v` to toggle it.
+
+### Math
+
+Enable mathjax and tikzjax if you need mathematics and tikzcd diagrams in your book.
+
+```toml
+tikzjax = true
+mathjax = true
+```
+
+### Paths
+
+In `extra`, you need to set up two paths:
+
+First, `upload_prefix` is the path to the folder, where you put all images.
+
+For example, if you put all your images in folder `/static/upload`, then you should set
+
+```toml
+upload_prefix = "/upload"
+```
+
+Second, Home link:
+
+```toml
+home_url="https://shurui.people.stanford.edu/"
+```
+
+It may be link to your homepage, or a guide/TOC page which collects links to all your books (in this way you can organize multiple books with this theme).
+
+### Example toml
+
+```toml
+title = "Shurui Liu's Coding Notes"
+description = "Personal Notes"
+base_url = "https://web.stanford.edu/~srliu/Notes"
+theme = "MATbook"
+
+compile_sass = true
+taxonomies = [
+  { name = "tags", paginate_by = 10, rss = true }
+]
+build_search_index = true
+
+[markdown]
+highlight_code = true
+highlight_theme = "css"
+external_links_target_blank = true
+smart_punctuation = true
+
+[extra.booktheme]
+book_number_chapters = true
+book_only_current_section_pages = false
+tikzjax = true
+mathjax = true
+upload_prefix = "https://web.stanford.edu/~srliu/Notes/upload"
+home_url = "https://shurui.sites.stanford.edu/"
+```
+
+## Usage
+
+### File structure
+
+All content should be put in `/content` folder as general Zola projects. Each chapter should be a folder inside `/content`, which contains its sections (markdown files). Here is an example of the file structure:
+
+```markdown
+.
+├── chapter1
+│   ├── _index.md
+│   ├── section1.md
+│   └── section2.md
+├── chapter2
+│   ├── _index.md
+│   └── section1.md
+├── chapter3
+│   ├── _index.md
+│   ├── section1.md
+│   ├── section2.md
+│   └── section3.md
+└── _index.md
+```
+
+In `/content` folder, there should be one `_index.md`, which contains title and welcome/preface infomation of the book. In its front matter, you should set `sort_by = "weight" ` to manually control the order of chapters (or you can use sort by slug or date for your notebook).
+
+Each chapter(folder) must have an `_index.md` file. It should sets its `weight` front-matter variable to its chapter number, and set `sort_by = "weight"` in its front matter.
+
+Then in each chapter(folder), each section should be a `page` and should have its `weight` variable set to its section
+number.
+
+If you don't want welcome/preface page of the book or of a chapter, you can use `redirect_to` front-matter variable in the corresponding `_index.md`.
+
+You can write a shell scripts to automate creating new chapters or new notes. For example, you can consult my `zshconfig` project on my [github](https://github.com/srliu3264) (If you can not see it, probably it is bacasue I currently make it private. You can email me for access.)
+
+### Hotkeys
+
+In a browser, you can always type `?` to toggle the help page, reminding you of hotkeys. 
+
+The rule is inspired by Vim, Zathura, and [Olivine](https://github.com/dongryul-kim/olivine). 
+
+The list of hotkeys may keep expanding, so I will not list all here. You can use `?` the help page, or see `hotkeys.js` manually to check existing functions.
+
+The hotkey `i` will allow you to idle inside MATRIX (inspired by [cmatrix](https://github.com/abishekvashok/cmatrix)), and since MAT is both initials for matrix and math, I lazily named this project after it.
