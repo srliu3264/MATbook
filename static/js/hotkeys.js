@@ -2,6 +2,7 @@ console.log("Hotkeys script loaded");
 
 window.goElems = [];
 window.hintInput = "";
+window.jumpStack = [];
 // 1. INITIALIZE SETTINGS ON LOAD
 // Restore 'c' toggle preference immediately
 (function initSettings() {
@@ -87,20 +88,21 @@ document.addEventListener("keydown", function(e) {
     case 'H': history.back(); break;
     case 'L': history.forward(); break;
     
-    case 'h': navigateMap(-1); break;
-    case 'l': navigateMap(1); break;
-    case 'u': navigateParent(); break;
-    case 'd': navigateNextChapter(); break;
+    case 'h': saveJump(); navigateMap(-1); break;
+    case 'l': saveJump(); navigateMap(1); break;
+    case 'u': saveJump(); navigateParent(); break;
+    case 'd': saveJump(); navigateNextChapter(); break;
 
     // --- SCROLLING ---
     case 'j': scrollPage(100); break;
     case 'k': scrollPage(-100); break;
     case 'J': scrollTOC(100); break;
     case 'K': scrollTOC(-100); break;
-    case 'g': scrollToPosition(0); break;
-    case 'G': scrollToPosition(999999); break;
+    case 'g': saveJump(); scrollToPosition(0); break;
+    case 'G': saveJump(); scrollToPosition(999999); break;
     case 'v': toggleTOCCollapse(); break;
     case 's': window.dispatchEvent(new Event('toggle-scroll-spy')); break;
+    case 'o': jumpBack(); break;
   }
 });
 
@@ -330,6 +332,7 @@ function followGoElems() {
 
   // 2. Exact Match? Execute.
   if (matches.length === 1 && matches[0].key === input) {
+      saveJump();
       matches[0].elem.click();
       // if (matches[0].elem.tagName === 'A') window.location.href = matches[0].elem.href;
       clearGoElems();
@@ -364,5 +367,51 @@ function toggleTOCCollapse() {
     } else {
         html.classList.add('toc-collapse-mode');
         localStorage.setItem("toc-collapse", "true");
+    }
+}
+/* ============================
+   JUMP LIST LOGIC
+   ============================ */
+
+// Helper: Find which element is actually scrolled
+function getScrollTop() {
+    // 1. Try Window
+    if (window.scrollY > 0) return window.scrollY;
+    
+    // 2. Try Containers
+    let containers = ['.page', '.book-content', 'html', 'body'];
+    for (let selector of containers) {
+        let el = document.querySelector(selector);
+        if (el && el.scrollTop > 0) return el.scrollTop;
+    }
+    
+    // 3. Default to 0
+    return 0;
+}
+
+function saveJump() {
+    // Limit stack size
+    if (window.jumpStack.length > 20) window.jumpStack.shift();
+    
+    // Save the REAL scroll position (from window or container)
+    let currentPos = getScrollTop();
+    window.jumpStack.push(currentPos);
+    
+    console.log("Saved Jump Position:", currentPos);
+}
+
+function jumpBack() {
+    // 1. Try Local Jump
+    if (window.jumpStack.length > 0) {
+        let y = window.jumpStack.pop();
+        console.log("Jumping back to:", y);
+        
+        // Use the helper that knows how to scroll containers
+        scrollToPosition(y); 
+    } 
+    // 2. Fallback to History
+    else {
+        console.log("Jump stack empty, going back in history.");
+        history.back();
     }
 }
