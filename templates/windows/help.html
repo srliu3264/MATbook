@@ -1,36 +1,98 @@
 <div id="help-window" class="help-modal" style="display: none;">
     <div class="help-content">
-        <h3>Keyboard Shortcuts</h3>
-        <ul>
-            <li><span class="key">h</span> <span>Previous Page</span></li>
-            <li><span class="key">l</span> <span>Next Page</span></li>
-            <li><span class="key">u</span> <span>Up to Parent Chapter</span></li>
-            <li><span class="key">d</span> <span>Jump to Next Chapter</span></li>
+        <h3 class="help-title">Keyboard Shortcuts</h3>
+        
+        <div class="help-grid">
             
-            <li><span class="key">H</span> <span>History Back</span></li>
-            <li><span class="key">L</span> <span>History Forward</span></li>
-            
-            <li><span class="key">j</span> <span>Scroll Down</span></li>
-            <li><span class="key">k</span> <span>Scroll Up</span></li>
-	    <li><span class="key">J</span> <span>Scroll TOC Down</span></li>
-            <li><span class="key">K</span> <span>Scroll TOC Up</span></li>
-            <li><span class="key">g</span> <span>Scroll to Top</span></li>
-            <li><span class="key">G</span> <span>Scroll to Bottom</span></li>
-            
-            <li><span class="key">t</span> <span>Toggle Theme</span></li>
-            <li><span class="key">c</span> <span>Toggle Collapse of Left Sidebar</span></li>
-            <li><span class="key">[</span> <span>Toggle Left Bar</span></li>
-            <li><span class="key">]</span> <span>Toggle Right Bar</span></li>
-            <li><span class="key">\</span> <span>Toggle Header</span></li>
-            
-            <li><span class="key">/</span> <span>Focus Search</span></li>
-            <li><span class="key">f</span> <span>Follow Link</span></li>
-            <li><span class="key">r</span> <span>Reload Page</span></li>
-            
-            <li><span class="key">?</span> <span>Open/Close this Help</span></li>
-            <li><span class="key">Esc</span> <span>Focus Document</span></li>
-	    <li><span class="key">v</span> <span>Toggle Right Collapse</span></li>
-            <li><span class="key">s</span> <span>Toggle Scroll Spy</span></li>
-        </ul>
+            <div class="help-group">
+                <h4>Vim Navigation</h4>
+                <ul>
+                    <li><span class="key">h</span> <span>Previous Page</span></li>
+                    <li><span class="key">l</span> <span>Next Page</span></li>
+                    <li><span class="key">j</span> <span>Scroll Down</span></li>
+                    <li><span class="key">k</span> <span>Scroll Up</span></li>
+                    <li><span class="key">u</span> <span>Up to Chapter</span></li>
+                    <li><span class="key">d</span> <span>Next Chapter</span></li>
+                    <li><span class="key">g</span> <span>Scroll to Top</span></li>
+                    <li><span class="key">G</span> <span>Scroll to Bottom</span></li>
+                </ul>
+            </div>
+
+            <div class="help-group">
+                <h4>Utilities</h4>
+                <ul>
+                    <li><span class="key">/</span> <span>Focus Search</span></li>
+                    <li><span class="key">f</span> <span>Open/Close Link Options</span></li>
+                    <li><span class="key">r</span> <span>Reload</span></li>
+                    <li><span class="key">H</span> <span>History Back</span></li>
+                    <li><span class="key">L</span> <span>History Fwd</span></li>
+                    <li><span class="key">?</span> <span>Open/Close Help</span></li>
+                    <li><span class="key">Esc</span> <span>Focus Document</span></li>
+		    <li><span class="key">s</span> <span>Toggle ScrollSpy</span></li>
+                </ul>
+            </div>
+
+            <div class="help-group">
+                <h4>Left Bar</h4>
+                <ul>
+                    <li><span class="key">[</span> <span>Toggle Visible</span></li>
+                    <li><span class="key">c</span> <span>Toggle Collapse</span></li>
+                </ul>
+
+                <h4 style="margin-top: 15px;">Right Bar</h4>
+                <ul>
+                    <li><span class="key">]</span> <span>Toggle Visible</span></li>
+		    <li><span class="key">v</span> <span>Toggle Collapse</span></li>
+                    <li><span class="key">J</span> <span>Scroll Down</span></li>
+                    <li><span class="key">K</span> <span>Scroll Up</span></li>
+                </ul>
+
+                <h4 style="margin-top: 15px;">Appearance</h4>
+                <ul>
+                    <li><span class="key">t</span> <span>Toggle Theme</span></li>
+                    <li><span class="key">\</span> <span>Toggle Header</span></li>
+                </ul>
+            </div>
+
+        </div>
     </div>
 </div>
+
+<!-- NOTE: Old version: 1-column -->
+
+<!-- <div id="help-window" class="help-modal" style="display: none;"> -->
+<!--     <div class="help-content"> -->
+<!--         <h3>Keyboard Shortcuts</h3> -->
+<!--         <ul> -->
+<!--             <li><span class="key">h</span> <span>Previous Page</span></li> -->
+<!--             <li><span class="key">l</span> <span>Next Page</span></li> -->
+<!--             <li><span class="key">u</span> <span>Up to Parent Chapter</span></li> -->
+<!--             <li><span class="key">d</span> <span>Jump to Next Chapter</span></li> -->
+<!---->
+<!--             <li><span class="key">H</span> <span>History Back</span></li> -->
+<!--             <li><span class="key">L</span> <span>History Forward</span></li> -->
+<!---->
+<!--             <li><span class="key">j</span> <span>Scroll Down</span></li> -->
+<!--             <li><span class="key">k</span> <span>Scroll Up</span></li> -->
+<!-- 	    <li><span class="key">J</span> <span>Scroll TOC Down</span></li> -->
+<!--             <li><span class="key">K</span> <span>Scroll TOC Up</span></li> -->
+<!--             <li><span class="key">g</span> <span>Scroll to Top</span></li> -->
+<!--             <li><span class="key">G</span> <span>Scroll to Bottom</span></li> -->
+<!---->
+<!--             <li><span class="key">t</span> <span>Toggle Theme</span></li> -->
+<!--             <li><span class="key">c</span> <span>Toggle Collapse of Left Sidebar</span></li> -->
+<!--             <li><span class="key">[</span> <span>Toggle Left Bar</span></li> -->
+<!--             <li><span class="key">]</span> <span>Toggle Right Bar</span></li> -->
+<!--             <li><span class="key">\</span> <span>Toggle Header</span></li> -->
+<!---->
+<!--             <li><span class="key">/</span> <span>Focus Search</span></li> -->
+<!--             <li><span class="key">f</span> <span>Follow Link</span></li> -->
+<!--             <li><span class="key">r</span> <span>Reload Page</span></li> -->
+<!---->
+<!--             <li><span class="key">?</span> <span>Open/Close this Help</span></li> -->
+<!--             <li><span class="key">Esc</span> <span>Focus Document</span></li> -->
+<!-- 	    <li><span class="key">v</span> <span>Toggle Right Collapse</span></li> -->
+<!--             <li><span class="key">s</span> <span>Toggle Scroll Spy</span></li> -->
+<!--         </ul> -->
+<!--     </div> -->
+<!-- </div> -->
