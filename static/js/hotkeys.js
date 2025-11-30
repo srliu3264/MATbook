@@ -103,8 +103,10 @@ document.addEventListener("keydown", function(e) {
     case 'v': toggleTOCCollapse(); break;
     case 's': window.dispatchEvent(new Event('toggle-scroll-spy')); break;
     case 'o': jumpBack(); break;
+
     case 'i': toggleMatrix(); break;
     case 'F': toggleFullScreen(); break;
+    case 'a': toggleAquarium(); break;
   }
 });
 
@@ -160,6 +162,8 @@ function closeAllModals() {
   }
   let matrix = document.getElementById("cmatrix-canvas");
   if (matrix) toggleMatrix();
+  let fish = document.getElementById("aquarium-canvas");
+  if (fish) toggleAquarium();
 }
 
 function focusSearch() {
