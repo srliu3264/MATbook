@@ -104,6 +104,7 @@ document.addEventListener("keydown", function(e) {
     case 's': window.dispatchEvent(new Event('toggle-scroll-spy')); break;
     case 'o': jumpBack(); break;
     case 'i': toggleMatrix(); break;
+    case 'F': toggleFullScreen(); break;
   }
 });
 
@@ -416,5 +417,16 @@ function jumpBack() {
     else {
         console.log("Jump stack empty, going back in history.");
         history.back();
+    }
+}
+function toggleFullScreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+            console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+        });
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
     }
 }
