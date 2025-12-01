@@ -264,17 +264,22 @@ function toggleAquarium() {
             });
         }
     }
-    
     function spawnWhaleSpout(whale) {
+        // Determine spout origin (top of whale's head)
         let spoutX = whale.direction === -1 ? whale.x + 20 : whale.x + whale.width - 20;
-        for(let i=0; i<5; i++) {
+        let spoutY = whale.y;
+
+        // 1. Create the vertical column (The "BLAST")
+        // These particles shoot straight up fast and turn into spray later
+        for(let i=0; i<8; i++) {
              waterParticles.push({
-                x: spoutX + (Math.random() * 20 - 10),
-                y: whale.y,
-                speedY: -(Math.random() * 3 + 2),
-                speedX: (Math.random() * 2 - 1),
-                life: 40,
-                char: Math.random() > 0.5 ? "." : "'" 
+                x: spoutX,
+                y: spoutY,
+                speedY: -(Math.random() * 2 + 4), // Fast upward speed
+                speedX: (Math.random() * 0.5 - 0.25), // Very slight wobble
+                life: 30 + Math.random() * 10,
+                type: 'column', // New property to track state
+                char: "|" 
             });
         }
     }
