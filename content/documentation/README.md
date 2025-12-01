@@ -1,11 +1,12 @@
-# MATbook
++++
+title = "MATbook"
+weight = 1
++++
 
 A [Zola](https://github.com/getzola/zola) theme for personal notebooks or chapter books. Based on  [Vincent Prouillet](https://www.vincentprouillet.com/)'s [Book](https://github.com/getzola/book), inspired by [Dongryul Kim](https://web.stanford.edu/~dkim04/)'s [Olivine](https://github.com/dongryul-kim/olivine).
 
-Live Demo: [https://srliu3264.github.io/MATbook-live-demo](https://srliu3264.github.io/MATbook-live-demo/)
 ## Contents
 
-- [MATbook](#matbook)
   - [Features](#features)
   - [Contents](#contents)
   - [Installation](#installation)

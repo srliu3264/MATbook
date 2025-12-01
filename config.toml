@@ -1,4 +1,4 @@
-base_url = "https://web.stanford.edu/~srliu/PSNotes"
+base_url = "https://github.com/srliu3264/MATbook-live-demo/"
 compile_sass = true
 title = "Shurui's Notes"
 description = "Personal Notes"
@@ -15,7 +15,7 @@ smart_punctuation = true
 
 [extra]
 tikzjax = true
-upload_prefix = "/upload"
+upload_prefix = "https://github.com/srliu3264/MATbook-live-demo/upload"
 
 [extra.booktheme]
 home_url="https://shurui.people.stanford.edu/"

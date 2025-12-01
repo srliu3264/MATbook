@@ -1,13 +1,11 @@
 name = "MATbook"
-description = "A zola book theme inspired from book and olivine"
+description = "A zola chapter book theme inspired from book and olivine"
 license = "MIT"
-# homepage = "https://github.com/getzola/"
-# min_version = ""
-# demo = ""
+homepage = "https://github.com/srliu3264/MATbook"
+min_version = "v1.0"
+demo = "https://srliu3264.github.io/MATbook-live-demo/"
 
-[extra]
-book_number_chapters = true
-book_only_current_section_pages = false
+
 
 [author]
 name = "Shurui Liu"
