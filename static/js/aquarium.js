@@ -239,8 +239,8 @@ function toggleAquarium() {
             color: specialType === 'shark' ? sprites.shark.color : (type ? type.color : "#ffffff"),
             speed: (specialType === 'shark' ? 4 : (type ? type.speed : 1)) * direction,
             type: specialType || 'fish',
-            width: art[0].length * (fontSize * 0.6),
-            height: h,
+            width: maxWidth * (fontSize * 0.6),
+	    height: h,
             direction: direction
         });
     }
