@@ -433,6 +433,13 @@ function toggleAquarium() {
                 }
                 if (hook.lineLength <= 0) {
                     hook.active = false;
+		
+		// Regenerate fish in case of extinction
+		    if (hook.catch) {
+                        setTimeout(() => {
+                             spawnEntity(sprites.fish[Math.floor(Math.random() * sprites.fish.length)]);
+                        }, 1000);
+                    }
                 }
             }
         }
