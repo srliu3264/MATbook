@@ -48,17 +48,19 @@ function toggleAquarium() {
     resize();
     window.addEventListener('resize', resize);
     
-    const keys = { left: false, right: false, drop: false };
+    const keys = { left: false, right: false, drop: false, reel: false};
     const handleKeyDown = (e) => {
-        if (e.code === 'ArrowLeft' || e.key === 'a') keys.left = true;
-        if (e.code === 'ArrowRight' || e.key === 'd') keys.right = true;
-        if (e.code === 'Space' || e.code === 'ArrowDown' || e.key === 's') keys.drop = true;
+        if (e.code === 'ArrowLeft') keys.left = true;
+        if (e.code === 'ArrowRight' ) keys.right = true;
+        if (e.code === 'Space' || e.code === 'ArrowDown' || e.key === 'j') keys.drop = true;
+	if (e.code === 'ArrowUp' || e.key === 'k') keys.reel = true;
     };
 
     const handleKeyUp = (e) => {
-        if (e.code === 'ArrowLeft' || e.key === 'a') keys.left = false;
-        if (e.code === 'ArrowRight' || e.key === 'd') keys.right = false;
-        if (e.code === 'Space' || e.code === 'ArrowDown' || e.key === 's') keys.drop = false;
+        if (e.code === 'ArrowLeft') keys.left = false;
+        if (e.code === 'ArrowRight') keys.right = false;
+        if (e.code === 'Space' || e.code === 'ArrowDown' || e.key === 'j') keys.drop = false;
+	if (e.code === 'ArrowUp' || e.key === 'k') keys.reel = false;
     };
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
@@ -90,16 +92,16 @@ function toggleAquarium() {
         ],
         shark: {
             right: [
-	"				      __",
-	"	                             ( `\ ",
-	"	  ,                          )   `\ ",
-	"	;' `.                        (     `\ __",
-	"	 ;   `.             __..---''          `~~~~-._",
-	"	  `.   `.____...--''                       (b  `--._",
-	"	    >                     _.-'      .((      ._     )",
-	"	  .`.-`--...__         .-'     -.___.....-(|/|/|/|/'",
-	"	 ;.'         `. ...----`.___.',,,_______......---'",
-	"	 '           '-'",
+	"                              __",
+	"                             ( `\ ",
+	"  ,                          )   `\ ",
+	";' `.                        (     `\ __",
+	" ;   `.             __..---''          `~~~~-._",
+	"  `.   `.____...--''                       (b  `--._",
+	"    >                     _.-'      .((      ._     )",
+	"  .`.-`--...__         .-'     -.___.....-(|/|/|/|/'",
+	" ;.'         `. ...----`.___.',,,_______......---'",
+	" '           '-'",
             ],
             left: [
                 "                      __",
@@ -389,6 +391,10 @@ function toggleAquarium() {
             ctx.lineTo(alignX, hookY + 4);
             ctx.arc(alignX - 3, hookY + 4, 3, 0, Math.PI, false);
             ctx.stroke();
+
+	    if (keys.reel) {
+                hook.state = 'reeling';
+            }
 
             if (hook.state === 'dropping' || hook.state === 'waiting') {
                 for (let i = 0; i < entities.length; i++) {
