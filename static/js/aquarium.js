@@ -1,11 +1,18 @@
 // inspired by https://github.com/cmatsuoka/asciiquarium/tree/master
 // use https://www.asciiart.eu/animals/fish
 let aquariumInterval = null;
+let aquariumListeners = null;
 
 function toggleAquarium() {
     const existingCanvas = document.getElementById('aquarium-canvas');
     if (existingCanvas) {
         clearInterval(aquariumInterval);
+
+	if (aquariumListeners) {
+            window.removeEventListener('keydown', aquariumListeners.down);
+            window.removeEventListener('keyup', aquariumListeners.up);
+        }
+	
         existingCanvas.remove();
         document.body.style.overflow = '';
         return;
@@ -36,10 +43,27 @@ function toggleAquarium() {
         ctx.font = `bold ${fontSize}px monospace`;
         
         WATER_LEVEL = 150; 
+	
     }
     resize();
     window.addEventListener('resize', resize);
+    
+    const keys = { left: false, right: false, drop: false };
+    const handleKeyDown = (e) => {
+        if (e.code === 'ArrowLeft' || e.key === 'a') keys.left = true;
+        if (e.code === 'ArrowRight' || e.key === 'd') keys.right = true;
+        if (e.code === 'Space' || e.code === 'ArrowDown' || e.key === 's') keys.drop = true;
+    };
 
+    const handleKeyUp = (e) => {
+        if (e.code === 'ArrowLeft' || e.key === 'a') keys.left = false;
+        if (e.code === 'ArrowRight' || e.key === 'd') keys.right = false;
+        if (e.code === 'Space' || e.code === 'ArrowDown' || e.key === 's') keys.drop = false;
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+    aquariumListeners = { down: handleKeyDown, up: handleKeyUp };
+    // -------------------------------
     // --- ASSETS ---
     const mirrorMap = {
         '(': ')', ')': '(', '[': ']', ']': '[', '{': '}', '}': '{',
@@ -179,8 +203,8 @@ function toggleAquarium() {
     // Hook State
     let hook = {
         active: false,
-        x: 0,
-        y: -100,
+        x: width / 2,
+	y: -100,
         state: 'idle', // idle, dropping, waiting, reeling
         catch: null, // The fish caught
         lineLength: 0
@@ -232,6 +256,7 @@ function toggleAquarium() {
             yPos = Math.random() * (height - 300 - WATER_LEVEL) + WATER_LEVEL + 50;
         }
 
+	const maxWidth = Math.max(...art.map(line => line.length));
         entities.push({
             x: direction === 1 ? -400 : width + 400,
             y: yPos,
