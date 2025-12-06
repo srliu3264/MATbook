@@ -322,61 +322,89 @@ function toggleAquarium() {
         });
 
         // 4. Hook Logic
+        
+        // Handle Horizontal Movement
+        const moveSpeed = 8;
+        if (keys.left) hook.x -= moveSpeed;
+        if (keys.right) hook.x += moveSpeed;
+        
+        // Screen Boundaries
+        if (hook.x < 10) hook.x = 10;
+        if (hook.x > width - 20) hook.x = width - 20;
+        
+	ctx.save(); 
+        ctx.font = "30px sans-serif"; 
+        ctx.fillStyle = "#ffffff"; 
+        ctx.fillText("⛵", hook.x - 22, WATER_LEVEL + 5); 
+        ctx.restore();
+
         if (!hook.active) {
-            hookTimer++;
-            if (hookTimer > 500) { // Random drop
+            if (keys.drop) {
                 hook.active = true;
                 hook.state = 'dropping';
-                hook.x = Math.random() * (width - 200) + 100;
-                hook.y = WATER_LEVEL;
                 hook.lineLength = 0;
                 hook.catch = null;
+		const maxPossibleLines = Math.floor((height - WATER_LEVEL - 50) / 10);
+		hook.targetLength = Math.floor(Math.random() * (maxPossibleLines - 5) + 5);
             }
         } else {
             ctx.fillStyle = "#ffffff";
             // Draw Line
-            for(let i=0; i<hook.lineLength; i++) {
-                ctx.fillText("|", hook.x, WATER_LEVEL + (i * 10));
+            for(let i=1; i<hook.lineLength; i++) {
+                ctx.fillText("|", hook.x, WATER_LEVEL + (i * 10)+5);
             }
-            let hookY = WATER_LEVEL + (hook.lineLength * 10);
-            ctx.fillText("J", hook.x - 4, hookY); // The Hook
+            let hookY = WATER_LEVEL + (hook.lineLength * 10)+5;
 
-            if (hook.state === 'dropping') {
-                hook.lineLength++;
-                if (hook.lineLength > 30 || hookY > height / 2) hook.state = 'waiting';
-            } else if (hook.state === 'waiting') {
-                // Check for bite
-                if (Math.random() > 0.995) hook.state = 'reeling'; // Give up eventually
-                
-                // Check collision with fish
+	// Draw hook
+            ctx.strokeStyle = "#ffffff";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            const alignX = hook.x + 4.5; 
+            ctx.moveTo(alignX, hookY - 8);
+            ctx.lineTo(alignX, hookY + 4);
+            ctx.arc(alignX - 3, hookY + 4, 3, 0, Math.PI, false);
+            ctx.stroke();
+
+            if (hook.state === 'dropping' || hook.state === 'waiting') {
                 for (let i = 0; i < entities.length; i++) {
                     let e = entities[i];
-                    if (e.type === 'fish' && Math.abs(e.x - hook.x) < 30 && Math.abs(e.y - hookY) < 20) {
+                    if (e.type === 'fish' && 
+                        hook.x > e.x - 10 && 
+                        hook.x < e.x + e.width + 10 &&
+                        hookY > e.y && 
+                        hookY < e.y + e.height) {
+                            
                         hook.catch = e;
                         hook.state = 'reeling';
-                        entities.splice(i, 1); // Remove from main list
+                        entities.splice(i, 1); 
                         break;
                     }
                 }
-            } else if (hook.state === 'reeling') {
+            }
+
+            // --- STATE UPDATES ---
+            if (hook.state === 'dropping') {
+                hook.lineLength++;
+                if (hook.lineLength >= hook.targetLength || hookY > height - 50) {
+                    hook.state = 'waiting';
+                }
+            } 
+            else if (hook.state === 'waiting') {
+                if (Math.random() > 0.99) hook.state = 'reeling';
+            } 
+            else if (hook.state === 'reeling') {
                 hook.lineLength--;
                 if (hook.catch) {
-                    // Draw caught fish attached to hook
                     ctx.fillStyle = hook.catch.color;
-                    
-                    // Rotate logic for caught fish (vertical)
-                    // ASCII rotation is hard, so we just draw it normally but following the hook
                     hook.catch.art.forEach((line, idx) => {
                         ctx.fillText(line, hook.x - 10, hookY + (idx * 10));
                     });
                 }
                 if (hook.lineLength <= 0) {
                     hook.active = false;
-                    hookTimer = 0;
                 }
             }
         }
-
         // 5. Entities
         for (let i = entities.length - 1; i >= 0; i--) {
             let e = entities[i];
