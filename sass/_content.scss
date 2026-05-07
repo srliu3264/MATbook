@@ -182,7 +182,8 @@
   }
   
   .page-without-menu {
-    left: calc(100% - 100px);
+    left: 0;
+    width: 100%;
   }
 }
 
