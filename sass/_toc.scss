@@ -348,12 +348,13 @@ body {
 
 @include variables.max-screen(600px) {
     .page__header {
-        padding: 0 8px;
+        padding: 0 6px;
         overflow: hidden;
     }
 
     .header-left {
         flex: 1 1 auto;
+        gap: 2px;
         overflow: hidden;
     }
 
@@ -365,9 +366,9 @@ body {
     .search-icon,
     .theme-icon,
     .toc-icon {
-        flex: 0 0 40px;
-        width: 40px;
-        min-width: 40px;
+        flex: 0 0 34px;
+        width: 34px;
+        min-width: 34px;
         height: 40px;
         margin: 0;
         padding: 0;
@@ -375,30 +376,35 @@ body {
     }
 
     .menu-icon img {
-        width: 30px;
-        height: 30px;
+        width: 27px;
+        height: 27px;
     }
 
-    .home-link,
-    .separator,
-    .title-name {
+    .page__header .home-link,
+    .page__header .title-name {
         flex: 0 1 auto;
         min-width: 0;
+        height: 40px;
+        line-height: 40px;
+        margin: 0;
         white-space: nowrap;
     }
 
-    .home-link,
-    .separator {
-        font-size: 1.4rem;
+    .page__header .home-link {
+        flex: 0 0 3.8rem;
+        font-size: 1.2rem;
+        justify-content: flex-start;
+        overflow: hidden;
     }
 
-    .separator {
-        margin: 0 3px;
+    .page__header .separator {
+        display: none;
     }
 
-    .title-name {
+    .page__header .title-name {
         flex: 1 1 auto;
-        font-size: 1.4rem;
+        font-size: 1.3rem;
+        text-align: left;
         overflow: hidden;
         text-overflow: ellipsis;
     }
@@ -406,7 +412,31 @@ body {
     .search-icon,
     .theme-icon,
     .toc-icon {
-        font-size: 2rem;
+        font-size: 1.75rem;
+    }
+}
+
+@include variables.max-screen(380px) {
+    .page__header {
+        padding: 0 4px;
+    }
+
+    .menu-icon,
+    .search-icon,
+    .theme-icon,
+    .toc-icon {
+        flex-basis: 32px;
+        width: 32px;
+        min-width: 32px;
+    }
+
+    .page__header .home-link {
+        flex-basis: 3.6rem;
+        font-size: 1.15rem;
+    }
+
+    .page__header .title-name {
+        font-size: 1.2rem;
     }
 }
 
