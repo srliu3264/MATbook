@@ -5,13 +5,13 @@
 {% else %}
 {% set header = "**" ~ class_title ~ " " ~ nth ~ ".** " %}
 {% endif %}
-{% if body is starting_with("*") %}
+{% if body is starting_with(pat="*") %}
 {{ header | markdown }}
 {{ body | markdown }}
-{% elif body is starting_with("-") %}
+{% elif body is starting_with(pat="-") %}
 {{ header | markdown }}
 {{ body | markdown }}
-{% elif body is starting_with("1.") %}
+{% elif body is starting_with(pat="1.") %}
 {{ header | markdown }}
 {{ body | markdown }}
 {% else %}
