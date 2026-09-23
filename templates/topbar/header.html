@@ -19,7 +19,7 @@
 	<div id="theme-toggle" class="theme-icon" title="Toggle Dark Mode">
         	<i class="fa-solid fa-moon"></i>
         </div>
-	{% if page.toc %}
+	{% if page is defined and page.toc %}
     		<div id="toggle-toc" class="toc-icon"><i class="fa-solid fa-list-ul"></i></div>
     	{% endif %}
     </div>
